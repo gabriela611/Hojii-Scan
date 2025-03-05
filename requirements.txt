@@ -1,0 +1,7 @@
+Django
+pillow
+pdfminer.six
+PyMuPDF
+pytesseract
+django-crispy-forms
+reportlab
