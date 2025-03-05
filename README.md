@@ -11,12 +11,15 @@ Hojii-Scan es una aplicación web desarrollada en **Django** que permite digital
 ### 1️⃣ Clonar el repositorio  
 
 git clone https://github.com/tu_usuario/Hojii-Scan.git
+
 cd Hojii-Scan
 
 ### 2️⃣ Crear y activar un entorno virtual
 
 python -m venv env
+
 source env/bin/activate  # Mac/Linux
+
 env\Scripts\activate     # Window
 
 ### 3️⃣ Instalar dependencias
