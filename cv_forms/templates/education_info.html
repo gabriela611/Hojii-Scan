@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información Educativa</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <style>
         .btn-education {
-            background-color: #d000ff;
+            background-color: #2d7b3c;
             color: white;
             border: none;
             padding: 10px;
@@ -18,7 +17,8 @@
             cursor: pointer;
         }
         .btn-education.active {
-            background-color: #0056b3;
+            background-color: #60c625;
+            color: white;
         }
         .education-fields {
             display: none;
@@ -29,9 +29,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <h2 class="text-center mb-4">Información Educativa</h2>
+                
                 <form method="post" id="education-info-form">
                     {% csrf_token %}
-
+                    
                     <div class="text-center mb-3">
                         <button type="button" class="btn btn-education" onclick="toggleEducation('secundaria')">Secundaria</button>
                         <button type="button" class="btn btn-education" onclick="toggleEducation('universitaria')">Universitaria</button>
@@ -39,87 +40,85 @@
                         <button type="button" class="btn btn-education" onclick="toggleEducation('otros')">Otros estudios</button>
                     </div>
 
-                    <!-- Educación Secundaria -->
+                    <input type="hidden" name="tipo" id="education-type" value="">
+
                     <div id="education-fields-secundaria" class="education-fields">
                         <h5>Educación Secundaria</h5>
                         <div class="form-group mb-3">
-                            <label for="{{ form.institucion.id_for_label }}" class="form-label">Institución</label>
-                            {{ form.institucion }}
+                            <label for="institucion_secundaria" class="form-label">Institución</label>
+                            <input type="text" name="institucion_secundaria" id="institucion_secundaria" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.titulo.id_for_label }}" class="form-label">Título obtenido</label>
-                            {{ form.titulo }}
+                            <label for="titulo_secundaria" class="form-label">Título obtenido</label>
+                            <input type="text" name="titulo_secundaria" id="titulo_secundaria" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.fecha_inicio.id_for_label }}" class="form-label">Fecha de inicio</label>
-                            {{ form.fecha_inicio }}
+                            <label for="fecha_inicio_secundaria" class="form-label">Fecha de inicio</label>
+                            <input type="date" name="fecha_inicio_secundaria" id="fecha_inicio_secundaria" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.fecha_fin.id_for_label }}" class="form-label">Fecha de finalización</label>
-                            {{ form.fecha_fin }}
+                            <label for="fecha_fin_secundaria" class="form-label">Fecha de finalización</label>
+                            <input type="date" name="fecha_fin_secundaria" id="fecha_fin_secundaria" class="form-control">
                         </div>
                     </div>
 
-                    <!-- Educación Universitaria -->
                     <div id="education-fields-universitaria" class="education-fields">
                         <h5>Educación Universitaria</h5>
                         <div class="form-group mb-3">
-                            <label for="{{ form.institucion.id_for_label }}" class="form-label">Institución</label>
-                            {{ form.institucion }}
+                            <label for="institucion_universitaria" class="form-label">Institución</label>
+                            <input type="text" name="institucion_universitaria" id="institucion_universitaria" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.titulo.id_for_label }}" class="form-label">Título obtenido</label>
-                            {{ form.titulo }}
+                            <label for="titulo_universitaria" class="form-label">Título obtenido</label>
+                            <input type="text" name="titulo_universitaria" id="titulo_universitaria" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.fecha_inicio.id_for_label }}" class="form-label">Fecha de inicio</label>
-                            {{ form.fecha_inicio }}
+                            <label for="fecha_inicio_universitaria" class="form-label">Fecha de inicio</label>
+                            <input type="date" name="fecha_inicio_universitaria" id="fecha_inicio_universitaria" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.fecha_fin.id_for_label }}" class="form-label">Fecha de finalización</label>
-                            {{ form.fecha_fin }}
+                            <label for="fecha_fin_universitaria" class="form-label">Fecha de finalización</label>
+                            <input type="date" name="fecha_fin_universitaria" id="fecha_fin_universitaria" class="form-control">
                         </div>
                     </div>
 
-                    <!-- Educación de Posgrado -->
                     <div id="education-fields-posgrado" class="education-fields">
                         <h5>Educación de Posgrado</h5>
                         <div class="form-group mb-3">
-                            <label for="{{ form.institucion.id_for_label }}" class="form-label">Institución</label>
-                            {{ form.institucion }}
+                            <label for="institucion_posgrado" class="form-label">Institución</label>
+                            <input type="text" name="institucion_posgrado" id="institucion_posgrado" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.titulo.id_for_label }}" class="form-label">Título obtenido</label>
-                            {{ form.titulo }}
+                            <label for="titulo_posgrado" class="form-label">Título obtenido</label>
+                            <input type="text" name="titulo_posgrado" id="titulo_posgrado" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.fecha_inicio.id_for_label }}" class="form-label">Fecha de inicio</label>
-                            {{ form.fecha_inicio }}
+                            <label for="fecha_inicio_posgrado" class="form-label">Fecha de inicio</label>
+                            <input type="date" name="fecha_inicio_posgrado" id="fecha_inicio_posgrado" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.fecha_fin.id_for_label }}" class="form-label">Fecha de finalización</label>
-                            {{ form.fecha_fin }}
+                            <label for="fecha_fin_posgrado" class="form-label">Fecha de finalización</label>
+                            <input type="date" name="fecha_fin_posgrado" id="fecha_fin_posgrado" class="form-control">
                         </div>
                     </div>
 
-                    <!-- Otros Estudios -->
                     <div id="education-fields-otros" class="education-fields">
                         <h5>Otros estudios</h5>
                         <div class="form-group mb-3">
-                            <label for="{{ form.institucion.id_for_label }}" class="form-label">Institución</label>
-                            {{ form.institucion }}
+                            <label for="institucion_otros" class="form-label">Institución</label>
+                            <input type="text" name="institucion_otros" id="institucion_otros" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.titulo.id_for_label }}" class="form-label">Título obtenido</label>
-                            {{ form.titulo }}
+                            <label for="titulo_otros" class="form-label">Título obtenido</label>
+                            <input type="text" name="titulo_otros" id="titulo_otros" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.fecha_inicio.id_for_label }}" class="form-label">Fecha de inicio</label>
-                            {{ form.fecha_inicio }}
+                            <label for="fecha_inicio_otros" class="form-label">Fecha de inicio</label>
+                            <input type="date" name="fecha_inicio_otros" id="fecha_inicio_otros" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="{{ form.fecha_fin.id_for_label }}" class="form-label">Fecha de finalización</label>
-                            {{ form.fecha_fin }}
+                            <label for="fecha_fin_otros" class="form-label">Fecha de finalización</label>
+                            <input type="date" name="fecha_fin_otros" id="fecha_fin_otros" class="form-control">
                         </div>
                     </div>
 
@@ -134,19 +133,10 @@
 
     <script>
         function toggleEducation(type) {
-            var fields = document.querySelectorAll(".education-fields");
-            fields.forEach(field => field.style.display = "none");
-
+            document.getElementById("education-type").value = type;
+            document.querySelectorAll(".education-fields").forEach(field => field.style.display = "none");
             document.getElementById("education-fields-" + type).style.display = "block";
-
-            var buttons = document.querySelectorAll(".btn-education");
-            buttons.forEach(button => button.classList.remove("active"));
-            event.target.classList.add("active");
         }
     </script>
-
-    <!-- Bootstrap JS y dependencias -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
