@@ -37,15 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'cv_forms',  # Nueva app para los formularios
+    
     # Apps del proyecto
     'upload',
     'extraction',
     'resume',
 
-    # Librerías externas
-    'crispy_forms',
+   
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
