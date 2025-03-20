@@ -9,4 +9,4 @@ class PersonalInfoForm(forms.ModelForm):
 class EducationInfoForm(forms.ModelForm):
     class Meta:
         model = EducationInfo
-        fields = ['institucion', 'titulo', 'fecha_graduacion']
+        fields = ['tipo', 'institucion', 'titulo', 'fecha_inicio', 'fecha_fin']

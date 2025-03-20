@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'upload',
     'extraction',
     'resume',
+    'widget_tweaks',
 
    
 ]
