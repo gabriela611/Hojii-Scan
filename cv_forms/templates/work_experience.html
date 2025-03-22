@@ -3,19 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Información Personal</title>
+    <title>Experiencia Laboral</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         .btn-custom {
-            background-color: #28a745; /* Verde Bootstrap */
+            background-color: #28a745;
             color: white;
             border: none;
         }
         .btn-custom:hover {
             background-color: #218838;
+        }
+        .experiencia-item {
+            border: 2px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+        }
+        .remove-experience {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -23,35 +35,52 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h2 class="text-center mb-4">Información Personal</h2>
-                <form method="post" id="personal-info-form">
+                <h2 class="text-center mb-4">Experiencia Laboral</h2>
+                
+                <form method="post">
                     {% csrf_token %}
-                    {% load widget_tweaks %}
-
-                    <!-- Experiencia Laboral -->
-                    <h4 class="mt-4">Experiencia Laboral</h4>
+                    {{ formset.management_form }}
+                    
                     <div id="experiencia-container">
-                        <div class="experiencia-item mb-3">
-                            <label class="form-label">Puesto</label>
-                            <input type="text" name="puesto[]" class="form-control" placeholder="Ej: Ingeniero de Software" required>
+                        {% for form in formset %}
+                            <div class="experiencia-item">
+                                <div class="mb-3">
+                                    <label class="form-label">Puesto</label>
+                                    {{ form.puesto }}
+                                    <small class="text-muted">Ejemplo: Ingeniero de Software</small>
+                                </div>
 
-                            <label class="form-label mt-2">Empresa</label>
-                            <input type="text" name="empresa[]" class="form-control" placeholder="Ej: Google" required>
+                                <div class="mb-3">
+                                    <label class="form-label">Empresa</label>
+                                    {{ form.empresa }}
+                                    <small class="text-muted">Ejemplo: Google</small>
+                                </div>
 
-                            <label class="form-label mt-2">Responsabilidades</label>
-                            <textarea name="responsabilidades[]" class="form-control" placeholder="Describe tus responsabilidades..." required></textarea>
+                                <div class="mb-3">
+                                    <label class="form-label">Responsabilidades</label>
+                                    {{ form.responsabilidades }}
+                                    <small class="text-muted">Ejemplo: Desarrollo de aplicaciones web</small>
+                                </div>
 
-                            <label class="form-label mt-2">Proyectos</label>
-                            <textarea name="proyectos[]" class="form-control" placeholder="Opcional: menciona proyectos en los que trabajaste..."></textarea>
+                                <div class="mb-3">
+                                    <label class="form-label">Proyectos</label>
+                                    {{ form.proyectos }}
+                                    <small class="text-muted">Ejemplo: Plataforma de análisis de datos</small>
+                                </div>
 
-                            <label class="form-label mt-2">Fecha de Inicio</label>
-                            <input type="date" name="fecha_inicio[]" class="form-control" required>
+                                <div class="mb-3">
+                                    <label class="form-label">Fecha de inicio</label>
+                                    <input type="date" name="{{ form.fecha_inicio.html_name }}" value="{{ form.fecha_inicio.value|default_if_none:'' }}" class="form-control">
+                                </div>
 
-                            <label class="form-label mt-2">Fecha de Fin</label>
-                            <input type="date" name="fecha_fin[]" class="form-control">
+                                <div class="mb-3">
+                                    <label class="form-label">Fecha de fin</label>
+                                    <input type="date" name="{{ form.fecha_fin.html_name }}" value="{{ form.fecha_fin.value|default_if_none:'' }}" class="form-control">
+                                </div>
 
-                            <button type="button" class="btn btn-danger mt-2 remove-experience">Eliminar</button>
-                        </div>
+                                <button type="button" class="btn btn-danger remove-experience">Eliminar</button>
+                            </div>
+                        {% endfor %}
                     </div>
 
                     <button type="button" class="btn btn-secondary mt-3" id="add-experience">Agregar Experiencia</button>
@@ -66,44 +95,37 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS y dependencias -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
     <!-- Script para añadir/eliminar experiencias laborales -->
     <script>
-        document.getElementById('add-experience').addEventListener('click', function () {
-            let container = document.getElementById('experiencia-container');
-            let div = document.createElement('div');
-            div.classList.add('experiencia-item', 'mb-3');
-            div.innerHTML = `
-                <label class="form-label">Puesto</label>
-                <input type="text" name="puesto[]" class="form-control" placeholder="Ej: Ingeniero de Software" required>
+        document.addEventListener("DOMContentLoaded", function () {
+            let container = document.getElementById("experiencia-container");
+            let totalForms = document.querySelector("#id_work_experience-TOTAL_FORMS");
+            let emptyForm = container.querySelector(".experiencia-item").cloneNode(true);
 
-                <label class="form-label mt-2">Empresa</label>
-                <input type="text" name="empresa[]" class="form-control" placeholder="Ej: Google" required>
-
-                <label class="form-label mt-2">Responsabilidades</label>
-                <textarea name="responsabilidades[]" class="form-control" placeholder="Describe tus responsabilidades..." required></textarea>
-
-                <label class="form-label mt-2">Proyectos</label>
-                <textarea name="proyectos[]" class="form-control" placeholder="Opcional: menciona proyectos en los que trabajaste..."></textarea>
-
-                <label class="form-label mt-2">Fecha de Inicio</label>
-                <input type="date" name="fecha_inicio[]" class="form-control" required>
-
-                <label class="form-label mt-2">Fecha de Fin</label>
-                <input type="date" name="fecha_fin[]" class="form-control">
-
-                <button type="button" class="btn btn-danger mt-2 remove-experience">Eliminar</button>
-            `;
-            container.appendChild(div);
-        });
-
-        document.addEventListener('click', function (e) {
-            if (e.target.classList.contains('remove-experience')) {
-                e.target.parentElement.remove();
+            function updateFormIndexes() {
+                let forms = document.querySelectorAll(".experiencia-item");
+                forms.forEach((form, index) => {
+                    form.innerHTML = emptyForm.innerHTML.replace(/work_experience-\d+/g, `work_experience-${index}`);
+                });
+                totalForms.value = forms.length;
             }
+
+            document.getElementById("add-experience").addEventListener("click", function () {
+                let newForm = emptyForm.cloneNode(true);
+                container.appendChild(newForm);
+                updateFormIndexes();
+            });
+
+            document.addEventListener("click", function (e) {
+                if (e.target.classList.contains("remove-experience")) {
+                    e.target.closest(".experiencia-item").remove();
+                    updateFormIndexes();
+                }
+            });
         });
     </script>
 </body>

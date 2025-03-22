@@ -18,7 +18,6 @@
         }
         .btn-education.active {
             background-color: #60c625;
-            color: white;
         }
         .education-fields {
             display: none;
@@ -34,14 +33,15 @@
                     {% csrf_token %}
                     
                     <div class="text-center mb-3">
-                        <button type="button" class="btn btn-education" onclick="toggleEducation('secundaria')">Secundaria</button>
-                        <button type="button" class="btn btn-education" onclick="toggleEducation('universitaria')">Universitaria</button>
-                        <button type="button" class="btn btn-education" onclick="toggleEducation('posgrado')">Posgrado</button>
-                        <button type="button" class="btn btn-education" onclick="toggleEducation('otros')">Otros estudios</button>
+                        <button type="button" class="btn btn-education" onclick="toggleEducation('secundaria', this)">Secundaria</button>
+                        <button type="button" class="btn btn-education" onclick="toggleEducation('universitaria', this)">Universitaria</button>
+                        <button type="button" class="btn btn-education" onclick="toggleEducation('posgrado', this)">Posgrado</button>
+                        <button type="button" class="btn btn-education" onclick="toggleEducation('otros', this)">Otros estudios</button>
                     </div>
 
                     <input type="hidden" name="tipo" id="education-type" value="">
 
+                    <!-- Secundaria -->
                     <div id="education-fields-secundaria" class="education-fields">
                         <h5>Educación Secundaria</h5>
                         <div class="form-group mb-3">
@@ -62,6 +62,7 @@
                         </div>
                     </div>
 
+                    <!-- Universitaria -->
                     <div id="education-fields-universitaria" class="education-fields">
                         <h5>Educación Universitaria</h5>
                         <div class="form-group mb-3">
@@ -80,8 +81,11 @@
                             <label for="fecha_fin_universitaria" class="form-label">Fecha de finalización</label>
                             <input type="date" name="fecha_fin_universitaria" id="fecha_fin_universitaria" class="form-control">
                         </div>
+                    
                     </div>
+                    
 
+                    <!-- Posgrado -->
                     <div id="education-fields-posgrado" class="education-fields">
                         <h5>Educación de Posgrado</h5>
                         <div class="form-group mb-3">
@@ -102,23 +106,12 @@
                         </div>
                     </div>
 
+                    <!-- Otros estudios -->
                     <div id="education-fields-otros" class="education-fields">
                         <h5>Otros estudios</h5>
                         <div class="form-group mb-3">
                             <label for="institucion_otros" class="form-label">Institución</label>
                             <input type="text" name="institucion_otros" id="institucion_otros" class="form-control">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="titulo_otros" class="form-label">Título obtenido</label>
-                            <input type="text" name="titulo_otros" id="titulo_otros" class="form-control">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="fecha_inicio_otros" class="form-label">Fecha de inicio</label>
-                            <input type="date" name="fecha_inicio_otros" id="fecha_inicio_otros" class="form-control">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="fecha_fin_otros" class="form-label">Fecha de finalización</label>
-                            <input type="date" name="fecha_fin_otros" id="fecha_fin_otros" class="form-control">
                         </div>
                     </div>
 
@@ -132,11 +125,23 @@
     </div>
 
     <script>
-        function toggleEducation(type) {
+        function toggleEducation(type, btn) {
             document.getElementById("education-type").value = type;
+            
             document.querySelectorAll(".education-fields").forEach(field => field.style.display = "none");
             document.getElementById("education-fields-" + type).style.display = "block";
+
+            document.querySelectorAll(".btn-education").forEach(button => button.classList.remove("active"));
+            btn.classList.add("active");
         }
+
+        document.getElementById("education-info-form").addEventListener("submit", function(event) {
+            const tipo = document.getElementById("education-type").value;
+            if (!tipo) {
+                alert("Por favor, selecciona un tipo de educación antes de enviar el formulario.");
+                event.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>

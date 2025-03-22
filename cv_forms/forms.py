@@ -2,6 +2,7 @@ from django import forms
 from .models import PersonalInfo, EducationInfo
 from .models import WorkExperience
 from django.forms import modelformset_factory
+from .models import HabilidadesCompetencias
 
 class PersonalInfoForm(forms.ModelForm):
     fecha_nacimiento = forms.DateField(
@@ -19,16 +20,25 @@ class EducationInfoForm(forms.ModelForm):
     class Meta:
         model = EducationInfo
         fields = ['tipo', 'institucion', 'titulo', 'fecha_inicio', 'fecha_fin']
-    
-    def clean_tipo(self):
-        tipo = self.cleaned_data.get('tipo')
-        if not tipo:
-            raise forms.ValidationError("Debe seleccionar un tipo de educación.")
-        return tipo
+        widgets = {
+            'fecha_inicio': forms.DateInput(attrs={'type': 'date'}),
+            'fecha_fin': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+WorkExperienceFormSet = modelformset_factory(
+    WorkExperience,
+    fields=['puesto', 'empresa', 'responsabilidades', 'proyectos', 'fecha_inicio', 'fecha_fin'],
+    extra=1
+)
 
 
-class WorkExperienceForm(forms.ModelForm):
+class HabilidadesCompetenciasForm(forms.ModelForm):
     class Meta:
-        model = WorkExperience
-        fields = ['puesto', 'empresa', 'responsabilidades', 'proyectos', 'fecha_inicio', 'fecha_fin']
-WorkExperienceFormSet = modelformset_factory(WorkExperience, fields=['puesto', 'empresa', 'responsabilidades', 'proyectos', 'fecha_inicio', 'fecha_fin'], extra=1)
+        model = HabilidadesCompetencias
+        fields = ['habilidades_tecnicas', 'cualidades_personales', 'idiomas', 'trabajo_deseado']
+        widgets = {
+            'habilidades_tecnicas': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'cualidades_personales': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'idiomas': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'trabajo_deseado': forms.TextInput(attrs={'class': 'form-control'}),
+        }

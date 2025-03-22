@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from .forms import PersonalInfoForm, EducationInfoForm,WorkExperience
 from .models import PersonalInfo
 from .forms import WorkExperienceFormSet
+from .forms import HabilidadesCompetenciasForm
+from .models import HabilidadesCompetencias
+from .models import  PersonalInfo
+from .models import EducationInfo
 
 def personal_info_view(request):
     if request.method == 'POST':
@@ -24,40 +28,87 @@ def education_info_view(request):
 
     if request.method == 'POST':
         print("📩 Datos recibidos en POST:", request.POST)  # Verificar datos recibidos
-        form = EducationInfoForm(request.POST)
-        
-        if form.is_valid():
-            education_info = form.save(commit=False)
-            education_info.personal_info = personal_info
-            education_info.save()
-            print("✅ Redirigiendo a Work Experience")  # Depuración
-            return redirect('work_experience', personal_id=personal_info.id)
 
-        else:
-            print("❌ Error en el formulario:", form.errors.as_json())  # Ver errores detallados
+        # Guardar información de secundaria
+        if request.POST.get('institucion_secundaria'):
+            EducationInfo.objects.create(
+                personal_info=personal_info,
+                tipo='secundaria',
+                institucion=request.POST.get('institucion_secundaria'),
+                titulo=request.POST.get('titulo_secundaria'),
+                fecha_inicio=request.POST.get('fecha_inicio_secundaria'),
+                fecha_fin=request.POST.get('fecha_fin_secundaria')
+            )
+
+        # Guardar información universitaria
+        if request.POST.get('institucion_universitaria'):
+            EducationInfo.objects.create(
+                personal_info=personal_info,
+                tipo='universitaria',
+                institucion=request.POST.get('institucion_universitaria'),
+                titulo=request.POST.get('titulo_universitaria'),
+                fecha_inicio=request.POST.get('fecha_inicio_universitaria'),
+                fecha_fin=request.POST.get('fecha_fin_universitaria')
+            )
+
+        # Guardar información de posgrado
+        if request.POST.get('institucion_posgrado'):
+            EducationInfo.objects.create(
+                personal_info=personal_info,
+                tipo='posgrado',
+                institucion=request.POST.get('institucion_posgrado'),
+                titulo=request.POST.get('titulo_posgrado'),
+                fecha_inicio=request.POST.get('fecha_inicio_posgrado'),
+                fecha_fin=request.POST.get('fecha_fin_posgrado')
+            )
+
+        # Guardar información de otros estudios
+        if request.POST.get('institucion_otros'):
+            EducationInfo.objects.create(
+                personal_info=personal_info,
+                tipo='otros',
+                institucion=request.POST.get('institucion_otros'),
+                titulo=request.POST.get('titulo_otros'),
+                fecha_inicio=request.POST.get('fecha_inicio_otros'),
+                fecha_fin=request.POST.get('fecha_fin_otros')
+            )
+
+        print("✅ Redirigiendo a Work Experience")  # Depuración
+        return redirect('work_experience', personal_id=personal_info.id)
 
     else:
         form = EducationInfoForm()
 
     return render(request, 'education_info.html', {'form': form, 'personal_info': personal_info})
 
-
-
-
 def work_experience_view(request, personal_id):
     personal_info = PersonalInfo.objects.get(id=personal_id)
-    
+
     if request.method == "POST":
-        formset = WorkExperienceFormSet(request.POST, queryset=WorkExperience.objects.filter(personal_info=personal_info))
-        
+        formset = WorkExperienceFormSet(request.POST, prefix='work_experience')
         if formset.is_valid():
             instances = formset.save(commit=False)
             for instance in instances:
-                instance.personal_info = personal_info  # Relacionar con la persona
+                instance.personal_info = personal_info  # Asignar la relación
                 instance.save()
-            return redirect('siguiente_pagina')  # Redirigir a la siguiente vista
-    
+            return redirect('habilidades_competencias')
     else:
-        formset = WorkExperienceFormSet(queryset=WorkExperience.objects.filter(personal_info=personal_info))
-    
+        formset = WorkExperienceFormSet(queryset=WorkExperience.objects.filter(personal_info=personal_info), prefix='work_experience')
+
     return render(request, 'work_experience.html', {'formset': formset, 'personal_info': personal_info})
+
+   
+   
+def habilidades_competencias_view(request):
+    personal_info = PersonalInfo.objects.get(id=request.session.get('personal_info_id'))  # Obtener el usuario actual
+    habilidades, created = HabilidadesCompetencias.objects.get_or_create(personal_info=personal_info)
+
+    if request.method == 'POST':
+        form = HabilidadesCompetenciasForm(request.POST, instance=habilidades)
+        if form.is_valid():
+            form.save()
+            return redirect('generate_resume')  # Página donde generas la hoja de vida
+    else:
+        form = HabilidadesCompetenciasForm(instance=habilidades)
+
+    return render(request, 'habilidades_competencias.html', {'form': form})
