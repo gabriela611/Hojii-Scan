@@ -2,10 +2,19 @@ from django.db import models
 
 
 class PersonalInfo(models.Model):
+    GENERO_OPCIONES = [
+        ('M', 'Masculino'),
+        ('F', 'Femenino'),
+        ('NB', 'No Binario'),
+        ('O', 'Otro'),
+        ('P', 'Prefiero no decirlo'),
+    ]
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     email = models.EmailField()
     documento = models.CharField(max_length=20, unique=True)
+    genero = models.CharField(max_length=2, choices=GENERO_OPCIONES, default='P')
+    fecha_nacimiento = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"

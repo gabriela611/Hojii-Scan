@@ -4,9 +4,16 @@ from .models import WorkExperience
 from django.forms import modelformset_factory
 
 class PersonalInfoForm(forms.ModelForm):
+    fecha_nacimiento = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
+    )
+
     class Meta:
         model = PersonalInfo
-        fields = ['nombre', 'apellido', 'email', 'documento']
+        fields = ['nombre', 'apellido', 'email', 'documento', 'genero', 'fecha_nacimiento']
+        widgets = {
+            'genero': forms.Select(attrs={'class': 'form-control'}),
+        }
 
 class EducationInfoForm(forms.ModelForm):
     class Meta:
