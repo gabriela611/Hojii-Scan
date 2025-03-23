@@ -55,7 +55,8 @@
                     <!-- Botones -->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-3">
                         <a href="{% url 'home' %}" class="btn btn-custom">Volver al Inicio</a>
-                        <button type="submit" class="btn btn-custom">Generar hoja de vida</button>
+                        <a href="{% url 'hoja_vida' personal_info.documento %}" class="btn btn-custom">Generar Hoja de Vida</a>
+                        
                     </div>
                 </form>
             </div>

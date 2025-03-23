@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoja de Vida</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .card {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .section-title {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <h1 class="text-center mb-4">¡Felicidades! Su hoja de vida ha sido creada exitosamente.</h1>
+
+                <!-- Información Personal -->
+                <div class="section-title">Información Personal</div>
+                <div class="card">
+                    <div class="card-header">Datos Personales</div>
+                    <div class="card-body">
+                        <p><strong>Nombre:</strong> {{ personal_info.nombre }}</p>
+                        <p><strong>Apellido:</strong> {{ personal_info.apellido }}</p>
+                        <p><strong>Email:</strong> {{ personal_info.email }}</p>
+                        <p><strong>Documento:</strong> {{ personal_info.documento }}</p>
+                        <p><strong>Género:</strong> {{ personal_info.get_genero_display }}</p>
+                        <p><strong>Fecha de Nacimiento:</strong> {{ personal_info.fecha_nacimiento }}</p>
+                    </div>
+                </div>
+
+                <!-- Educación -->
+                <div class="section-title">Educación</div>
+                {% for educacion in personal_info.education_info.all %}
+                    <div class="card">
+                        <div class="card-header">{{ educacion.get_tipo_display }}</div>
+                        <div class="card-body">
+                            <p><strong>Institución:</strong> {{ educacion.institucion }}</p>
+                            <p><strong>Título:</strong> {{ educacion.titulo }}</p>
+                            <p><strong>Fecha de Inicio:</strong> {{ educacion.fecha_inicio }}</p>
+                            <p><strong>Fecha de Fin:</strong> {{ educacion.fecha_fin }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <!-- Experiencia Laboral -->
+                <div class="section-title">Experiencia Laboral</div>
+                {% for experiencia in personal_info.work_experiences.all %}
+                    <div class="card">
+                        <div class="card-header">{{ experiencia.puesto }}</div>
+                        <div class="card-body">
+                            <p><strong>Empresa:</strong> {{ experiencia.empresa }}</p>
+                            <p><strong>Responsabilidades:</strong> {{ experiencia.responsabilidades }}</p>
+                            <p><strong>Proyectos:</strong> {{ experiencia.proyectos }}</p>
+                            <p><strong>Fecha de Inicio:</strong> {{ experiencia.fecha_inicio }}</p>
+                            <p><strong>Fecha de Fin:</strong> {{ experiencia.fecha_fin }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <!-- Habilidades y Competencias -->
+                <div class="section-title">Habilidades y Competencias</div>
+                <div class="card">
+                    <div class="card-header">Habilidades</div>
+                    <div class="card-body">
+                        <p><strong>Habilidades Técnicas:</strong> {{ personal_info.habilidades.habilidades_tecnicas }}</p>
+                        <p><strong>Cualidades Personales:</strong> {{ personal_info.habilidades.cualidades_personales }}</p>
+                        <p><strong>Idiomas:</strong> {{ personal_info.habilidades.idiomas }}</p>
+                        <p><strong>Trabajo Deseado:</strong> {{ personal_info.habilidades.trabajo_deseado }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

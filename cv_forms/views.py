@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PersonalInfoForm, EducationInfoForm,WorkExperience
 from .models import PersonalInfo
 from .forms import WorkExperienceFormSet
@@ -107,8 +107,14 @@ def habilidades_competencias_view(request):
         form = HabilidadesCompetenciasForm(request.POST, instance=habilidades)
         if form.is_valid():
             form.save()
-            return redirect('generate_resume')  # Página donde generas la hoja de vida
+            # Redirige a la vista 'hoja_vida' con el documento del usuario
+            return redirect('hoja_vida', documento=personal_info.documento)
     else:
         form = HabilidadesCompetenciasForm(instance=habilidades)
 
-    return render(request, 'habilidades_competencias.html', {'form': form})
+    return render(request, 'habilidades_competencias.html', {'form': form, 'personal_info': personal_info})
+
+
+def hoja_vida(request, documento):
+    personal_info = get_object_or_404(PersonalInfo, documento=documento)
+    return render(request, 'hoja_vida.html', {'personal_info': personal_info})
