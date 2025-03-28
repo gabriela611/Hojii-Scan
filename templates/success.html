@@ -1,13 +1,15 @@
-<!-- filepath: c:\Users\juane\OneDrive\Documentos\EAFIT\Software\Hojii-Scan\templates\success.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Éxito</title>
+    <title>PDF Generado</title>
 </head>
 <body>
-    <h1>{{ message }}</h1>
+    <h1>El PDF se generó correctamente.</h1>
+    <p>Puedes ver el PDF generado a continuación:</p>
+    <iframe src="{{ pdf_url }}" width="100%" height="600px"></iframe>
+    <p>O <a href="{{ pdf_url }}" download>haz clic aquí para descargar el PDF</a>.</p>
     <a href="{% url 'extraction' %}">Volver a la página principal</a>
 </body>
 </html>

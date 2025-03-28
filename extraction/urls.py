@@ -9,3 +9,4 @@ urlpatterns = [
     path("success/", views.success_view, name="success"),  # Nueva ruta para la página de éxito
     path('', views.extraction_view, name='extraction'),  # Define la vista y el nombre
 ]
+
