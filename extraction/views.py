@@ -7,10 +7,16 @@ from .forms import ImageUploadForm
 from .models import ExtractedResume
 from django.core.files.base import ContentFile
 from PyPDF2 import PdfReader, PdfWriter
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from django.conf import settings
+import os
+# Configura la ruta de Tesseract OCR si es necesario
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 # Función para extraer texto de la imagen
-def extract_text_from_image(image_path):
-    image = Image.open(image_path)
+def extract_text_from_image(image):
+    image = Image.open(image)  # Abrir la imagen
     text = pytesseract.image_to_string(image)  # OCR para extraer texto
     return text
 
@@ -25,7 +31,7 @@ def upload_image(request):
             temp_path = default_storage.save("temp/" + image.name, image)
             text = extract_text_from_image(default_storage.path(temp_path))
             extracted_text = text  # Guardamos el texto extraído
-
+            default_storage.delete(temp_path)  # Elimina el archivo temporal
     else:
         form = ImageUploadForm()
 
@@ -34,11 +40,14 @@ def upload_image(request):
 # Vista para generar el PDF con el formato base
 def generate_pdf(request):
     if request.method == "POST":
-        name = request.POST.get("name", "hoja_de_vida")  # Nombre personalizado
-        edited_text = request.POST.get("edited_text", "")  # Texto corregido por el usuario
+        name = request.POST.get("name", "hoja_de_vida")
+        edited_text = request.POST.get("edited_text", "")
 
-        # Leer la plantilla del PDF base
-        template_path = "static/Documento base de hoja de vida.pdf"
+       # Construir la ruta al archivo PDF base
+        template_path = settings.BASE_DIR / 'extraction' / 'static' / 'extraction' / 'Documento base de hoja de vida.pdf'
+        if not template_path.exists():
+            return render(request, "extraction.html", {"error": "El archivo base no se encontró."})
+
         with open(template_path, "rb") as f:
             reader = PdfReader(f)
             writer = PdfWriter()
@@ -75,3 +84,19 @@ def generate_pdf(request):
         return redirect("success")  # Redirigir a una página de éxito
 
     return render(request, "extraction.html")
+
+# Vista principal para extracción
+def extraction_view(request):
+    extracted_text = None
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.cleaned_data['image']
+            extracted_text = extract_text_from_image(image)
+    else:
+        form = ImageUploadForm()
+
+    return render(request, 'extraction.html', {'form': form, 'extracted_text': extracted_text})
+
+def success_view(request):
+    return render(request, "success.html", {"message": "El PDF se generó correctamente."})
