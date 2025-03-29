@@ -1,0 +1,21 @@
+<h2>Lista de CVs Guardados</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Puesto</th>
+        <th>Fecha de Creación</th>
+    </tr>
+    {% for resume in resumes %}
+    <tr>
+        <td>{{ resume.id }}</td>
+        <td>{{ resume.name }}</td>
+        <td>{{ resume.job_title }}</td>
+        <td>{{ resume.created_at }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">No hay CVs guardados</td>
+    </tr>
+    {% endfor %}
+</table>
