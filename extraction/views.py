@@ -38,8 +38,9 @@ def upload_image(request):
 # Vista para generar el PDF con el texto editado
 def generate_pdf(request):
     if request.method == "POST":
-        # Capturar el nombre del archivo y el texto editado desde el formulario
+        # Capturar los datos del formulario
         name = request.POST.get("name", "hoja_de_vida")
+        profession = request.POST.get("profession", "Sin especificar")
         edited_text = request.POST.get("edited_text", "")
 
         # Crear un buffer para generar un nuevo PDF
@@ -62,9 +63,23 @@ def generate_pdf(request):
         c.save()
         buffer.seek(0)
 
-        # Guardar el PDF en la base de datos
-        pdf_file = ContentFile(buffer.getvalue(), name + ".pdf")
-        resume = ExtractedResume(name=name, pdf_file=pdf_file)
+        # Definir la ruta de almacenamiento en la carpeta "extraction"
+        pdf_folder = os.path.join(settings.MEDIA_ROOT, 'extraction')
+        if not os.path.exists(pdf_folder):
+            os.makedirs(pdf_folder)  # Crear la carpeta si no existe
+
+        pdf_path = os.path.join(pdf_folder, f"{name}.pdf")
+
+        # Guardar el archivo PDF en la carpeta especificada
+        with open(pdf_path, 'wb') as pdf_file:
+            pdf_file.write(buffer.getvalue())
+
+        # Guardar la referencia en la base de datos
+        resume = ExtractedResume(
+            name=name,
+            profession=profession,
+            pdf_file=f"extraction/{name}.pdf"
+        )
         resume.save()
 
         return redirect("success")  # Redirigir a una página de éxito
@@ -85,4 +100,8 @@ def extraction_view(request):
     return render(request, 'extraction.html', {'form': form, 'extracted_text': extracted_text})
 
 def success_view(request):
-    return render(request, "success.html", {"message": "El PDF se generó correctamente."})
+    # Obtener el último PDF guardado en la base de datos
+    last_resume = ExtractedResume.objects.last()
+    pdf_url = last_resume.pdf_file.url if last_resume else None
+
+    return render(request, "success.html", {"pdf_url": pdf_url})

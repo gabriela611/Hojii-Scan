@@ -7,9 +7,13 @@
 </head>
 <body>
     <h1>El PDF se generó correctamente.</h1>
-    <p>Puedes ver el PDF generado a continuación:</p>
-    <iframe src="{{ pdf_url }}" width="100%" height="600px"></iframe>
-    <p>O <a href="{{ pdf_url }}" download>haz clic aquí para descargar el PDF</a>.</p>
-    <a href="{% url 'extraction' %}">Volver a la página principal</a>
+    {% if pdf_url %}
+        <p>Puedes ver el PDF generado a continuación:</p>
+        <iframe src="{{ pdf_url }}" width="100%" height="600px"></iframe>
+        <p>O <a href="{{ pdf_url }}" download>haz clic aquí para descargar el PDF</a>.</p>
+    {% else %}
+        <p>No se encontró ningún PDF generado.</p>
+    {% endif %}
+    <a href="{% url 'home' %}">Volver a la página principal</a>
 </body>
 </html>
