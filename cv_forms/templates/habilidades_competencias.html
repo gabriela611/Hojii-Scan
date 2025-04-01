@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habilidades y Competencias</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .btn-custom {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-4">Habilidades y Competencias</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Campo Habilidades Técnicas -->
+                    <div class="form-group mb-3">
+                        <label for="{{ form.habilidades_tecnicas.id_for_label }}" class="form-label d-block">Habilidades Técnicas</label>
+                        {{ form.habilidades_tecnicas }}
+                        <small class="form-text text-muted">Ejemplo: Python, SQL, Redes (Opcional)</small>
+                    </div>
+
+                    <!-- Campo Cualidades Personales -->
+                    <div class="form-group mb-3">
+                        <label for="{{ form.cualidades_personales.id_for_label }}" class="form-label d-block">Cualidades Personales</label>
+                        {{ form.cualidades_personales }}
+                        <small class="form-text text-muted">Ejemplo: Responsable, puntual, trabajo en equipo</small>
+                    </div>
+
+                    <!-- Campo Idiomas -->
+                    <div class="form-group mb-3">
+                        <label for="{{ form.idiomas.id_for_label }}" class="form-label d-block">Idiomas</label>
+                        {{ form.idiomas }}
+                        <small class="form-text text-muted">Ejemplo: Español nativo, Inglés B1</small>
+                    </div>
+
+                    <!-- Campo Trabajo Deseado -->
+                    <div class="form-group mb-3">
+                        <label for="{{ form.trabajo_deseado.id_for_label }}" class="form-label d-block">Trabajo Deseado</label>
+                        {{ form.trabajo_deseado }}
+                        <small class="form-text text-muted">Ejemplo: Actualmente busco un empleo en el sector salud como enfermera auxiliar.</small>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-3">
+                        <a href="{% url 'home' %}" class="btn btn-custom">Volver al Inicio</a>
+                        <a href="{% url 'hoja_vida' personal_info.documento %}" class="btn btn-custom">Generar Hoja de Vida</a>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

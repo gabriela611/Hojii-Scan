@@ -26,7 +26,7 @@ urlpatterns = [
     path('extraction/', include('extraction.urls')), # app de extracción de texto de foto
     path('upload/', include('upload.urls')), # app de subida de archivos
     path('resume/', include('resume.urls')),  # Nueva app de formulario
-    
+    path('cv/', include('cv_forms.urls')),  # Enlace a la app de formularios
 ]
 
 if settings.DEBUG:
