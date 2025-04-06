@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     # Apps del proyecto
     'upload',
     'extraction',
-    'resume',
     'widget_tweaks',
 
    
