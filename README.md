@@ -24,10 +24,14 @@ env\Scripts\activate     # Window
 
 ### 3️⃣ Instalar dependencias
 
-pip install -r requirements.txt
+pip install -r requirements.txt 
+
+en el folder llamado "to install" encontrara la aplicacion tesseract en un zip 
+extraigalo e ejecute el instalador (no modifique la ubicacion del archivo)
 
 ### 4️⃣ Configurar la base de datos
 
+python manage.py makemigrations
 python manage.py migrate
 
 ### 5️⃣ Ejecutar el servidor

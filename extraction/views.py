@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.core.files.base import ContentFile
-from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from io import BytesIO
