@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Vista Preliminar del CV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+        .section {
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .input-box, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .education-block {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .add-edu-btn {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .confirm-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .confirm-btn:hover {
+            background-color: #218838;
+        }
+        .btn-download {
+            display: block;
+            width: 100%;
+            background-color: #00A859;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+            transition: background 0.3s;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+        .btn-download:hover {
+            background-color: #008746;
+        }
+        /* Enlace de regreso */
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
+            color: #00A859;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Vista Preliminar del CV</h1>
+    <form method="POST" action="{% url 'resume_preview' resume_id %}">
+        {% csrf_token %}
+
+        <!-- Información Personal -->
+        <div class="section">
+            <h2>Información Personal</h2>
+            <label>Nombre:</label>
+            <input type="text" name="name" class="input-box" value="{{ resume_data.name }}">
+
+            <label>Puesto:</label>
+            <input type="text" name="job_title" class="input-box" value="{{ resume_data.job_title }}">
+
+            <label>Contacto:</label>
+            <textarea name="contact" class="input-box" rows="2">{{ resume_data.contact }}</textarea>
+        </div>
+
+        <!-- Resumen -->
+        <div class="section">
+            <h2>Resumen</h2>
+            <textarea name="summary" class="input-box" rows="5">{{ resume_data.summary }}</textarea>
+        </div>
+
+        <!-- Área de Experiencia (Area of Expertise) -->
+        <div class="section">
+            <h2>Área de Experiencia</h2>
+            <textarea name="area_of_expertise" class="input-box" rows="5">{{ resume_data.area_of_expertise }}</textarea>
+        </div>
+
+        <!-- Logros Clave (Key Achievements) -->
+        <div class="section">
+            <h2>Logros Clave</h2>
+            <textarea name="key_achievements" class="input-box" rows="5">{{ resume_data.key_achievements }}</textarea>
+        </div>
+
+        <!-- Habilidades -->
+ 
+        {% if resume_data.skills %}
+            <div class="section">
+                <h2>Habilidades</h2>
+                <textarea name="skills" class="input-box" rows="3">{{ resume_data.skills }}</textarea>
+            </div>
+        {% endif %}
+
+
+        <!-- Experiencia Profesional -->
+        <div class="section">
+            <h2>Experiencia Profesional</h2>
+            <textarea name="professional_experience" class="input-box" rows="8">{{ resume_data.professional_experience }}</textarea>
+        </div>
+
+        <!-- Educación (con la lógica mejorada de 'education' como lista de dicts) -->
+        <div class="section">
+            <h2>Educación</h2>
+            <div id="education-container">
+                {% if resume_data.education %}
+                    {% for edu in resume_data.education %}
+                        <div class="education-block">
+                            <label>Título/Grado:</label><br>
+                            <input type="text" class="input-box" name="degree_{{ forloop.counter }}" value="{{ edu.degree }}">
+
+                            <label>Institución:</label><br>
+                            <input type="text" class="input-box" name="institution_{{ forloop.counter }}" value="{{ edu.institution }}">
+
+                            <label>Fechas:</label><br>
+                            <input type="text" class="input-box" name="start_date_{{ forloop.counter }}" value="{{ edu.start_date }}"> - 
+                            <input type="text" class="input-box" name="end_date_{{ forloop.counter }}" value="{{ edu.end_date }}">
+
+                            <label>Detalles:</label><br>
+                            <textarea class="input-box" name="details_{{ forloop.counter }}" rows="3">{{ edu.details }}</textarea>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Si no hay educación en los datos extraídos, mostramos 2 bloques vacíos por defecto -->
+                    {% for i in '12'|make_list %} 
+                    <div class="education-block">
+                        <label>Título/Grado:</label><br>
+                        <input type="text" class="input-box" name="degree_{{ forloop.counter }}" value="">
+
+                        <label>Institución:</label><br>
+                        <input type="text" class="input-box" name="institution_{{ forloop.counter }}" value="">
+
+                        <label>Fechas:</label><br>
+                        <input type="text" class="input-box" name="start_date_{{ forloop.counter }}" value=""> - 
+                        <input type="text" class="input-box" name="end_date_{{ forloop.counter }}" value="">
+
+                        <label>Detalles:</label><br>
+                        <textarea class="input-box" name="details_{{ forloop.counter }}" rows="3"></textarea>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <button type="button" class="add-edu-btn" onclick="addEducationBlock()">+ Añadir educación</button>
+        </div>
+
+        <!-- Información Adicional -->
+        <div class="section">
+            <h2>Información Adicional</h2>
+            <textarea name="additional_information" class="input-box" rows="5">{{ resume_data.additional_information }}</textarea>
+        </div>
+        
+        <button type="submit" class="confirm-btn">Confirmar y Guardar</button>
+    </form>
+
+    <!-- Script para añadir bloques de educación dinámicamente -->
+    <script>
+    function addEducationBlock() {
+        const container = document.getElementById('education-container');
+        // Genera un ID aleatorio o usa un contador global para evitar colisiones
+        const randomId = Math.floor(Math.random() * 100000);
+
+        const newBlock = `
+            <div class="education-block">
+                <label>Título/Grado:</label><br>
+                <input type="text" class="input-box" name="degree_new_${randomId}" value="">
+
+                <label>Institución:</label><br>
+                <input type="text" class="input-box" name="institution_new_${randomId}" value="">
+
+                <label>Fechas:</label><br>
+                <input type="text" class="input-box" name="start_date_new_${randomId}" value=""> -
+                <input type="text" class="input-box" name="end_date_new_${randomId}" value="">
+
+                <label>Detalles:</label><br>
+                <textarea class="input-box" name="details_new_${randomId}" rows="3"></textarea>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', newBlock);
+    }
+    </script>
+
+</body>
+</html>
