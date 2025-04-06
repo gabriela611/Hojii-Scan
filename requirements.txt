@@ -6,3 +6,5 @@ pytesseract
 django-crispy-forms
 reportlab
 PyPDF2
+pdfplumber
+django-widget-tweaks
