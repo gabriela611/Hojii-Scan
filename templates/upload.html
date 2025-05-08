@@ -31,12 +31,21 @@
     <a href="{% url 'home' %}" class="back-link">← Volver al inicio</a>
 
     <script>
-        // Mostrar el nombre del archivo seleccionado
         document.getElementById('resume').addEventListener('change', function() {
             let fileName = this.files.length > 0 ? this.files[0].name : "Sin archivos seleccionados";
             document.getElementById('file-name').textContent = fileName;
+    
+            // Enable/Disable the button visually
+            let submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = this.files.length === 0;
+        });
+    
+        // Ensure button is disabled when the page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('button[type="submit"]').disabled = true;
         });
     </script>
+    
 
 </body>
 </html>

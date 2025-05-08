@@ -1,146 +1,151 @@
-/* General */
+/* ============================
+   Base Styles
+============================ */
+
+
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     background-color: #f5f5f5;
-    padding: 20px;
+    padding: 40px 20px;
 }
 
-/* Contenedor principal */
+/* Main Layout Container */
 .container {
-    margin-top: 50px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-/* Títulos */
-h1, h2 {
+/* Typography */
+h1 {
+    font-size: 36px;
     color: #042C5C;
-    font-weight: bold;
+    font-weight: 700;
+    margin: 24px 0 24px;
 }
 
-/* Botones generales */
+h2 {
+    font-size: 28px;
+    color: #042C5C;
+    font-weight: 600;
+    margin: 0 0 20px;
+}
+
+/* Buttons & Interactions */
 .button,
 .file-label,
 button,
-.btn-education {
+.btn-education,
+.btn-custom {
     background-color: #28a745;
     color: white;
-    padding: 13px 42px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    display: block;
-    width: 200px;
-    margin: 10px auto;
-    text-decoration: none;
+    font-weight: 600;
     font-size: 16px;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 6px;
+    display: block;              
+    width: 200px;               
+    margin: 12px auto;  
+    cursor: pointer;
     text-align: center;
-    transition: background-color 0.3s ease;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .button:hover,
 .file-label:hover,
 button:hover,
-.btn-education:hover {
+.btn-education:hover,
+.btn-custom:hover {
     background-color: #218838;
+    transform: scale(1.03);
+}
+
+button:disabled {
+    background-color: #cccccc; /* Grey to indicate disabled */
+    color: #666666; /* Slightly faded text */
+    cursor: not-allowed; /* Prevent interaction */
+    transform: none; /* Remove hover scaling */
 }
 
 
-/* Formulario más ancho */
+/* Active State for Education Button */
+.btn-education.active {
+    background-color: #60c625;
+}
+
+/* Form Styling */
 form {
-    background: white;
-    padding: 40px;  /* Aumenta el padding */
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    display: block;
-    max-width: 800px;  /* Límite máximo para el ancho del formulario */
-    margin: 0 auto;  /* Centrar formulario */
+    background-color: white;
+    padding: 50px 40px;
+    max-width: 800px;
+    margin: 40px auto;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
-/* Contenedor más espacioso */
-.container {
-    margin-top: 50px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-/* Ocultar input real */
+/* File Upload Display */
 .file-input {
     display: none;
 }
 
-/* Mostrar el nombre del archivo */
 #file-name {
     font-size: 15px;
     color: #042C5C;
-    margin-left: 10px;
+    margin-top: 10px;
 }
 
-/* Enlace de regreso */
+/* Navigation */
 .back-link {
-    margin-top: 20px;
     display: inline-block;
-    color: #00A859;
-    font-weight: bold;
-    text-decoration: none;
+    margin-top: 30px;
     font-size: 16px;
+    color: #00A859;
+    font-weight: 600;
+    text-decoration: none;
 }
 
 .back-link:hover {
     text-decoration: underline;
 }
 
-/* Botones de educación */
-.btn-education {
-    padding: 10px;
-    margin: 5px;
-    width: auto;
-}
-
-.btn-education.active {
-    background-color: #60c625;
-}
-
-/* Secciones dinámicas (ocultas por defecto) */
+/* Section Visibility */
 .education-fields {
     display: none;
 }
 
-/* Tarjetas (card) de resumen final */
+/* Card Layout */
 .card {
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    text-align: left;
 }
 
 .card-header {
     background-color: #28a745;
     color: white;
-    font-weight: bold;
+    font-weight: 700;
+    padding: 15px 20px;
+    font-size: 18px;
 }
 
 .card-body {
-    padding: 20px;
+    padding: 25px 30px;
+    line-height: 1.6;
+    color: #333;
 }
 
-/* Título de secciones */
+/* Section Titles */
 .section-title {
-    margin-top: 30px;
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 26px;
     color: #28a745;
-}
-
-.btn-custom {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.btn-custom:hover {
-    background-color: #218838;
+    font-weight: 700;
+    margin: 60px 0 30px;
 }

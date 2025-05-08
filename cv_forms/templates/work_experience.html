@@ -32,6 +32,14 @@
             width: 100%;
             margin-top: 10px;
         }
+        .input-box, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
 
         
     </style>
@@ -50,7 +58,7 @@
                         {% for form in formset %}
                             <div class="experiencia-item">
                                 <div class="mb-3">
-                                    <label class="form-label">Puesto</label>
+                                    <label class="">Puesto</label>
                                     {{ form.puesto }}
                                     <small class="text-muted">Ejemplo: Ingeniero de Software</small>
                                 </div>

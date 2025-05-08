@@ -28,7 +28,14 @@ class EducationInfoForm(forms.ModelForm):
 WorkExperienceFormSet = modelformset_factory(
     WorkExperience,
     fields=['puesto', 'empresa', 'responsabilidades', 'proyectos', 'fecha_inicio', 'fecha_fin'],
-    extra=1
+    extra=1,
+    widgets = {
+            'puesto': forms.TextInput(attrs={'class': 'input-box'}),
+            'empresa': forms.TextInput(attrs={'class': 'input-box'}),
+            'responsabilidades': forms.Textarea(attrs={'class': 'input-box'}),
+            'proyectos': forms.Textarea(attrs={'class': 'input-box'}),
+        }
+    
 )
 
 

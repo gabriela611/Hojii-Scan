@@ -1,25 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}home{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hojii Scan</title>
-    
-</head>
-<body>
-    <div class="container">
-        <h1><span style="color: #28a745;">Hojii</span> Scan</h1>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="bg-white shadow-lg rounded-4 p-5 text-center" style="max-width: 500px; width: 100%;">
+        <h1 class="mb-4" style="font-weight: 600;">
+            <span style="color: #28a745;">Hojii</span> Scan
+        </h1>
 
-        <!-- Botones alineados en vertical -->
-        <a href="{% url 'extraction' %}" class="button">Tomar una foto</a>
-        <a href="{% url 'upload_resume' %}" class="button">Ir a Subir Archivos</a>
-        <a href="{% url 'personal_info' %}" class="button">Crear Hoja de Vida</a>
+        <!-- Botones verticales -->
+        <a href="{% url 'extraction' %}" class="btn btn-outline-success btn-lg w-100 mb-3">Tomar una foto</a>
+        <a href="{% url 'upload_resume' %}" class="btn btn-outline-success btn-lg w-100 mb-3">Ir a Subir Archivos</a>
+        <a href="{% url 'personal_info' %}" class="btn btn-outline-success btn-lg w-100">Crear Hoja de Vida</a>
     </div>
-</body>
-</html>
+</div>
 {% endblock %}

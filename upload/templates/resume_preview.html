@@ -1,8 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}resume_preview{% endblock %}
+
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Vista Preliminar del CV</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Vista Preliminar del CV</title>
+        {% block content %}
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -93,6 +97,7 @@
     </style>
 </head>
 <body>
+
 
     <h1>Vista Preliminar del CV</h1>
     <form method="POST" action="{% url 'resume_preview' resume_id %}">
@@ -227,3 +232,4 @@
 
 </body>
 </html>
+{% endblock %}
