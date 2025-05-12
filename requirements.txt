@@ -3,5 +3,6 @@ pytesseract
 pdfplumber
 django-widget-tweaks
 reportlab
+xhtml2pdf
 
 

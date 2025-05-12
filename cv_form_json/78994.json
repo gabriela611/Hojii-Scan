@@ -1,0 +1,33 @@
+{
+    "nombre": "qwdqwd",
+    "apellido": "qwddddddddddddd",
+    "email": "camilazuluaga@gmail.com",
+    "documento": "78994",
+    "genero": "Masculino",
+    "fecha_nacimiento": "2025-05-29",
+    "educacion": [
+        {
+            "tipo": "Educación Secundaria",
+            "institucion": "34r34r",
+            "titulo": "34r34r",
+            "fecha_inicio": "2025-05-23",
+            "fecha_fin": "2025-05-09"
+        }
+    ],
+    "experiencia_laboral": [
+        {
+            "puesto": "r4",
+            "empresa": "34r",
+            "responsabilidades": "34",
+            "proyectos": "34r3434r",
+            "fecha_inicio": "2025-05-17",
+            "fecha_fin": "2025-05-15"
+        }
+    ],
+    "habilidades": {
+        "habilidades_tecnicas": null,
+        "cualidades_personales": null,
+        "idiomas": null,
+        "trabajo_deseado": null
+    }
+}

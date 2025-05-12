@@ -1,0 +1,33 @@
+{
+    "nombre": "Maria Elena",
+    "apellido": "jesuita",
+    "email": "marialae@gmail.com",
+    "documento": "15698",
+    "genero": "Prefiero no decirlo",
+    "fecha_nacimiento": "2025-05-30",
+    "educacion": [
+        {
+            "tipo": "Educación Superior Universitaria",
+            "institucion": "sq",
+            "titulo": "qw",
+            "fecha_inicio": "2025-06-04",
+            "fecha_fin": "2025-05-23"
+        }
+    ],
+    "experiencia_laboral": [
+        {
+            "puesto": "sqw",
+            "empresa": "qss",
+            "responsabilidades": "sqw",
+            "proyectos": "qws",
+            "fecha_inicio": "2025-05-01",
+            "fecha_fin": "2025-05-09"
+        }
+    ],
+    "habilidades": {
+        "habilidades_tecnicas": null,
+        "cualidades_personales": null,
+        "idiomas": null,
+        "trabajo_deseado": null
+    }
+}

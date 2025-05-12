@@ -6,6 +6,10 @@ from .forms import HabilidadesCompetenciasForm
 from .models import HabilidadesCompetencias
 from .models import  PersonalInfo
 from .models import EducationInfo
+from django.http import HttpResponse
+from .utils.json_bulilder import CvJsonBuilder
+from .utils.pdf_generator import PdfGenerator
+import json
 
 def personal_info_view(request):
     if request.method == 'POST':
@@ -118,3 +122,22 @@ def habilidades_competencias_view(request):
 def hoja_vida(request, documento):
     personal_info = get_object_or_404(PersonalInfo, documento=documento)
     return render(request, 'hoja_vida.html', {'personal_info': personal_info})
+
+def generar_pdf(request, documento):
+    personal_info = get_object_or_404(PersonalInfo, documento=documento)
+    
+    # 1. Construir JSON y guardar archivo
+    builder = CvJsonBuilder(personal_info)
+    json_path = builder.save_to_file()
+
+    # 2. Leer JSON para generar PDF
+    with open(json_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    # 3. Generar PDF
+    pdf = PdfGenerator(data).generate_pdf()
+
+    # 4. Responder PDF al usuario
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="hoja_vida_{documento}.pdf"'
+    return response
