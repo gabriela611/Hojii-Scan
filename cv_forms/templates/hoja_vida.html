@@ -86,17 +86,24 @@
                     </div>
                 {% endfor %}
 
-                <!-- Habilidades y Competencias -->
+                 <!-- Habilidades y Competencias -->
                 <div class="section-title">Habilidades y Competencias</div>
                 <div class="card">
                     <div class="card-header">Habilidades</div>
                     <div class="card-body">
-                        <p><strong>Habilidades Técnicas:</strong> {{ personal_info.habilidades.habilidades_tecnicas }}</p>
-                        <p><strong>Cualidades Personales:</strong> {{ personal_info.habilidades.cualidades_personales }}</p>
-                        <p><strong>Idiomas:</strong> {{ personal_info.habilidades.idiomas }}</p>
-                        <p><strong>Trabajo Deseado:</strong> {{ personal_info.habilidades.trabajo_deseado }}</p>
+                        {% if personal_info.habilidades %}
+                            <p><strong>Habilidades Técnicas:</strong> {{ personal_info.habilidades.habilidades_tecnicas|default:"No especificado" }}</p>
+                            <p><strong>Cualidades Personales:</strong> {{ personal_info.habilidades.cualidades_personales|default:"No especificado" }}</p>
+                            <p><strong>Idiomas:</strong> {{ personal_info.habilidades.idiomas|default:"No especificado" }}</p>
+                            <p><strong>Trabajo Deseado:</strong> {{ personal_info.habilidades.trabajo_deseado|default:"No especificado" }}</p>
+                        {% else %}
+                            <p>No se han registrado habilidades y competencias.</p>
+                        {% endif %}
                     </div>
                 </div>
+
+
+                
             </div>
             <a href="{% url 'generar_pdf' personal_info.documento %}" class="btn btn-sm btn-outline-danger mt-3">
                 <i class="fas fa-file-pdf"></i> PDF
