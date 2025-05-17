@@ -1,0 +1,55 @@
+{
+    "nombre": "Maria Alejandra",
+    "apellido": "Ocampo",
+    "email": "marialeja0928@gmail.com",
+    "documento": "12121231",
+    "genero": "Femenino",
+    "fecha_nacimiento": "2025-05-15",
+    "educacion": [
+        {
+            "tipo": "Educación Secundaria",
+            "institucion": "Institicion Educativa Jaime Isaza",
+            "titulo": "Bachiller Academico ",
+            "fecha_inicio": "2025-05-30",
+            "fecha_fin": "2025-05-16"
+        },
+        {
+            "tipo": "Educación Secundaria",
+            "institucion": "Institicion Educativa Jaime Isaza",
+            "titulo": "Bachiller Academico ",
+            "fecha_inicio": "2025-05-30",
+            "fecha_fin": "2025-05-16"
+        },
+        {
+            "tipo": "Educación Superior Universitaria",
+            "institucion": "EAFIT",
+            "titulo": "INGENIERIA DE SISTEMAS",
+            "fecha_inicio": "2025-05-29",
+            "fecha_fin": "2025-05-23"
+        }
+    ],
+    "experiencia_laboral": [
+        {
+            "puesto": "lEONISA",
+            "empresa": "34r",
+            "responsabilidades": "DEDWE",
+            "proyectos": "MUCJ",
+            "fecha_inicio": "2025-04-29",
+            "fecha_fin": "2025-05-07"
+        },
+        {
+            "puesto": "Fotogrofa",
+            "empresa": "Casa de la cultura",
+            "responsabilidades": "EWDW",
+            "proyectos": "MUCHAS COSAS",
+            "fecha_inicio": "2025-05-14",
+            "fecha_fin": "2025-05-22"
+        }
+    ],
+    "habilidades": {
+        "habilidades_tecnicas": "PYTHON",
+        "cualidades_personales": "RESPONSABLE",
+        "idiomas": "INGLES",
+        "trabajo_deseado": "INGE"
+    }
+}

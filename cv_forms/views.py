@@ -101,27 +101,61 @@ def work_experience_view(request, personal_id):
 
     return render(request, 'work_experience.html', {'formset': formset, 'personal_info': personal_info})
 
-   
-   
 def habilidades_competencias_view(request):
-    personal_info = PersonalInfo.objects.get(id=request.session.get('personal_info_id'))  # Obtener el usuario actual
-    habilidades, created = HabilidadesCompetencias.objects.get_or_create(personal_info=personal_info)
+    # Verifica que el usuario tenga una sesión válida
+    if not request.session.get('personal_info_id'):
+        return redirect('pagina_de_inicio')
+    
+    try:
+        personal_info = PersonalInfo.objects.get(id=request.session['personal_info_id'])
+    except PersonalInfo.DoesNotExist:
+        return redirect('pagina_de_inicio')
+
+    # Obtiene o crea las habilidades
+    habilidades, created = HabilidadesCompetencias.objects.get_or_create(
+        personal_info=personal_info
+    )
 
     if request.method == 'POST':
+        print(f"📩 Datos recibidos en habilidades POST: {request.POST}")
         form = HabilidadesCompetenciasForm(request.POST, instance=habilidades)
         if form.is_valid():
-            form.save()
-            # Redirige a la vista 'hoja_vida' con el documento del usuario
+            instancia = form.save()
+            print("✅ Datos guardados:")
+            print(f"Habilidades técnicas: {instancia.habilidades_tecnicas}")
+            print(f"Cualidades personales: {instancia.cualidades_personales}")
+            print(f"Idiomas: {instancia.idiomas}")
+            print(f"Trabajo deseado: {instancia.trabajo_deseado}")
+            
             return redirect('hoja_vida', documento=personal_info.documento)
+        else:
+            print("❌ Errores en el formulario:")
+            print(form.errors)
     else:
         form = HabilidadesCompetenciasForm(instance=habilidades)
 
-    return render(request, 'habilidades_competencias.html', {'form': form, 'personal_info': personal_info})
-
+    return render(request, 'habilidades_competencias.html', {
+        'form': form,
+        'personal_info': personal_info
+    })
 
 def hoja_vida(request, documento):
-    personal_info = get_object_or_404(PersonalInfo, documento=documento)
-    return render(request, 'hoja_vida.html', {'personal_info': personal_info})
+    try:
+        personal_info = PersonalInfo.objects.select_related('habilidades').get(documento=documento)
+        
+        print("=== Hoja de vida cargada ===")
+        print(f"Nombre: {personal_info.nombre}")
+        print(f"Habilidades Técnicas: {personal_info.habilidades.habilidades_tecnicas}")
+        print(f"Cualidades personales: {personal_info.habilidades.cualidades_personales}")
+        print(f"Idiomas: {personal_info.habilidades.idiomas}")
+        print(f"Trabajo deseado: {personal_info.habilidades.trabajo_deseado}")
+
+        return render(request, 'hoja_vida.html', {
+            'personal_info': personal_info,
+        })
+    except PersonalInfo.DoesNotExist:
+        raise Http404("No existe la hoja de vida solicitada")
+
 
 def generar_pdf(request, documento):
     personal_info = get_object_or_404(PersonalInfo, documento=documento)
