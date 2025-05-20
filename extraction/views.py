@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.core.files.base import ContentFile
-from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from io import BytesIO
@@ -89,15 +88,22 @@ def generate_pdf(request):
 # Vista principal para extracción
 def extraction_view(request):
     extracted_text = None
-    if request.method == 'POST':
+    filename = None
+    if request.method == 'POST' and 'image' in request.FILES:
+        image = request.FILES['image']
+        filename = image.name  # <-- Aquí obtienes el nombre del archivo
         form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.cleaned_data['image']
             extracted_text = extract_text_from_image(image)
+        return render(request, 'extraction.html', {
+            'form': form,
+            'extracted_text': extracted_text,
+            'filename': filename,  # <-- Pásalo al contexto
+        })
     else:
         form = ImageUploadForm()
-
-    return render(request, 'extraction.html', {'form': form, 'extracted_text': extracted_text})
+    return render(request, 'extraction.html', {'form': form})
 
 def success_view(request):
     # Obtener el último PDF guardado en la base de datos
