@@ -11,106 +11,61 @@ import os
 from django.core.files.storage import default_storage
 from django.conf import settings
 import json
+from .strategies import OCRSpaceStrategy
 
-# Función para extraer texto de la imagen usando OCR.space API
+"""
+Este módulo implementa las vistas principales de la aplicación de extracción de texto.
+Utiliza el patrón Strategy para la extracción de texto, lo que permite:
+1. Separar la lógica de extracción de texto del resto de la aplicación
+2. Cambiar fácilmente entre diferentes servicios de OCR
+3. Mantener el código organizado y fácil de mantener
+"""
+
 def extract_text_from_image(image):
-    # Configurar la API key
-    api_key = os.environ.get('OCR_SPACE_API_KEY')
+    """
+    Extrae texto de una imagen usando la estrategia OCRSpace.
     
-    # Preparar la imagen para la API
-    image = Image.open(image)
-    
-    # Convertir la imagen a RGB si tiene canal alfa
-    if image.mode in ('RGBA', 'LA') or (image.mode == 'P' and 'transparency' in image.info):
-        background = Image.new('RGB', image.size, (255, 255, 255))
-        if image.mode == 'P':
-            image = image.convert('RGBA')
-        background.paste(image, mask=image.split()[-1])  # Usar el canal alfa como máscara
-        image = background
-    
-    # Guardar la imagen temporalmente
-    temp_path = os.path.join(settings.MEDIA_ROOT, 'temp_image.jpg')
-    image.save(temp_path, 'JPEG', quality=95)
-    
-    # Configurar los parámetros para la API
-    payload = {
-        'apikey': api_key,
-        'language': 'spa',  # Español
-        'isOverlayRequired': 'true',  # Necesitamos las coordenadas para preservar el formato
-        'detectOrientation': 'true',
-        'scale': 'true',
-        'OCREngine': '2',  # Motor OCR más preciso
-        'isTable': 'false',
-        'filetype': 'jpg'
-    }
-    
-    # Enviar la imagen a la API
-    with open(temp_path, 'rb') as f:
-        response = requests.post(
-            'https://api.ocr.space/parse/image',
-            files={'file': f},
-            data=payload
-        )
-    
-    # Eliminar el archivo temporal
-    os.remove(temp_path)
-    
-    # Procesar la respuesta
-    if response.status_code == 200:
-        result = response.json()
-        if result['IsErroredOnProcessing']:
-            return "Error al procesar la imagen"
+    Args:
+        image: Archivo de imagen a procesar
         
-        # Extraer el texto de la respuesta
-        extracted_text = ''
-        for text_result in result['ParsedResults']:
-            # Obtener el texto con las coordenadas
-            text_overlay = text_result.get('TextOverlay', {})
-            lines = text_overlay.get('Lines', [])
-            
-            # Ordenar las líneas por posición Y (de arriba a abajo)
-            lines.sort(key=lambda x: x.get('MinTop', 0))
-            
-            current_y = None
-            for line in lines:
-                line_text = line.get('LineText', '').strip()
-                if not line_text:
-                    continue
-                
-                # Obtener la posición Y de la línea actual
-                line_y = line.get('MinTop', 0)
-                
-                # Si hay un cambio significativo en Y, agregar un salto de línea extra
-                if current_y is not None and abs(line_y - current_y) > 20:  # Umbral de 20 píxeles
-                    extracted_text += '\n'
-                
-                # Agregar el texto de la línea
-                extracted_text += line_text + '\n'
-                current_y = line_y
-            
-            # Agregar un salto de línea extra entre párrafos
-            extracted_text += '\n'
-        
-        return extracted_text.strip()
-    else:
-        return "Error al conectar con el servicio OCR"
+    Returns:
+        str: Texto extraído de la imagen
+    """
+    strategy = OCRSpaceStrategy()
+    return strategy.extract_text(image)
 
-# Vista para subir imagen y extraer texto
 def upload_image(request):
-    extracted_text = None  # Variable para almacenar el texto extraído
+    """
+    Vista para subir una imagen y extraer su texto.
+    
+    Args:
+        request: Objeto HttpRequest con los datos del formulario
+        
+    Returns:
+        HttpResponse: Renderiza la página de extracción con el texto extraído
+    """
+    extracted_text = None
 
     if request.method == "POST":
         form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.cleaned_data['image']
-            extracted_text = extract_text_from_image(image)  # Extraer texto de la imagen
+            extracted_text = extract_text_from_image(image)
     else:
         form = ImageUploadForm()
 
     return render(request, "extraction.html", {"form": form, "extracted_text": extracted_text})
 
-# Vista para generar el JSON con el texto editado
 def generate_resume(request):
+    """
+    Vista para generar el JSON con el texto editado del CV.
+    
+    Args:
+        request: Objeto HttpRequest con los datos del formulario
+        
+    Returns:
+        HttpResponse: Redirige a la página de éxito o renderiza el formulario
+    """
     if request.method == "POST":
         # Capturar los datos del formulario
         name = request.POST.get("name", "hoja_de_vida")
@@ -131,7 +86,7 @@ def generate_resume(request):
         # Definir la ruta de almacenamiento en la carpeta "extraction"
         extraction_folder = os.path.join(settings.MEDIA_ROOT, 'extraction')
         if not os.path.exists(extraction_folder):
-            os.makedirs(extraction_folder)  # Crear la carpeta si no existe
+            os.makedirs(extraction_folder)
 
         json_path = os.path.join(extraction_folder, f"{name}.json")
 
@@ -147,13 +102,19 @@ def generate_resume(request):
         )
         resume.save()
 
-        return redirect("success")  # Redirigir a una página de éxito
+        return redirect("success")
 
     return render(request, "extraction.html")
 
 def parse_resume_sections(text):
     """
-    Función para parsear el texto del CV y extraer las secciones principales
+    Parsea el texto del CV y extrae las secciones principales.
+    
+    Args:
+        text (str): Texto del CV a parsear
+        
+    Returns:
+        dict: Diccionario con las secciones y su contenido
     """
     sections = {}
     current_section = None
@@ -173,7 +134,7 @@ def parse_resume_sections(text):
         "PERFIL PROFESIONAL",
         "EDUCACION",
         "FORMACION ACADEMICA",
-        "LICENCIAS Y MEMBRESIAS"
+        "LICENCIAS Y MEMBRESIAS",
         "EXPERIENCIA PROFESIONAL",
         "HABILIDADES",
         "IDIOMAS",
