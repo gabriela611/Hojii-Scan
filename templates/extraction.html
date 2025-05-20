@@ -60,11 +60,27 @@
 
                     {% if extracted_text %}
                         <div class="mt-5">
-                            <h2 class="text-center">Texto Extraído</h2>
+                            <h2 class="text-center mb-4">Texto Extraído Editable</h2>
                             <form method="post" action="{% url 'generate_pdf' %}">
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <textarea name="edited_text" rows="18" class="form-control" id="edited_textarea">{{ extracted_text }}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="accordion" id="previewAccordion">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingPreview">
+                                                <button class="accordion-button collapsed fw-bold text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePreview" aria-expanded="false" aria-controls="collapsePreview">
+                                                    <span style="font-size:1.1rem;"> Previsualización final de la hoja de vida</span>
+                                                </button>
+                                            </h2>
+                                            <div id="collapsePreview" class="accordion-collapse collapse" aria-labelledby="headingPreview" data-bs-parent="#previewAccordion">
+                                                <div class="accordion-body">
+                                                    <pre id="preview" class="bg-light p-3 border rounded" style="min-height: 200px;">{{ extracted_text }}</pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Nombre del archivo PDF:</label>
@@ -73,6 +89,62 @@
                                 <div class="mb-3">
                                     <label class="form-label">Profesión:</label>
                                     <input type="text" name="profession" class="form-control" required>
+                                </div>
+                                <hr>
+                                <h5 class="text-success">Información Personal</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Nombre:</label>
+                                        <input type="text" name="nombre" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Apellido:</label>
+                                        <input type="text" name="apellido" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email:</label>
+                                        <input type="email" name="email" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Documento:</label>
+                                        <input type="text" name="documento" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Género:</label>
+                                        <select name="genero" class="form-select">
+                                            <option value="M">Masculino</option>
+                                            <option value="F">Femenino</option>
+                                            <option value="NB">No Binario</option>
+                                            <option value="O">Otro</option>
+                                            <option value="P" selected>Prefiero no decirlo</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Fecha de nacimiento:</label>
+                                        <input type="date" name="fecha_nacimiento" class="form-control">
+                                    </div>
+                                </div>
+                                <hr>
+                                <h5 class="text-success">Habilidades y Competencias</h5>
+                                <div class="mb-3">
+                                    <label class="form-label">Habilidades técnicas:</label>
+                                    <input type="text" name="habilidades_tecnicas" class="form-control" placeholder="Ejemplo: Python, SQL, Redes">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Cualidades personales:</label>
+                                    <input type="text" name="cualidades_personales" class="form-control" placeholder="Ejemplo: Responsable, puntual, trabajo en equipo">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Idiomas:</label>
+                                    <input type="text" name="idiomas" class="form-control" placeholder="Ejemplo: Español nativo, Inglés B1">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Trabajo deseado:</label>
+                                    <input type="text" name="trabajo_deseado" class="form-control" placeholder="Ejemplo: Desarrollador backend en Python">
                                 </div>
                                 <div class="d-grid mb-2">
                                     <button type="submit" class="btn btn-success">Generar PDF</button>
