@@ -15,7 +15,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+LLM_WHISPERER_API_KEY = os.environ.get("LLM_WHISPERER_API_KEY")
 # Ruta al PDF base dentro de la carpeta static/extraction
 template_path = BASE_DIR / 'extraction' / 'static' / 'extraction' / 'Documento base de hoja de vida.pdf'
 
@@ -133,5 +133,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Media files (uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Crear directorios necesarios si no existen
+for directory in ['media', 'media/temp']:
+    os.makedirs(os.path.join(BASE_DIR, directory), exist_ok=True)

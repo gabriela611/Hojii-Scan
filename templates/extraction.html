@@ -61,7 +61,7 @@
                     {% if extracted_text %}
                         <div class="mt-5">
                             <h2 class="text-center mb-4">Texto Extraído Editable</h2>
-                            <form method="post" action="{% url 'generate_pdf' %}">
+                            <form method="post" action="{% url 'generate_resume' %}">
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <textarea name="edited_text" rows="18" class="form-control" id="edited_textarea">{{ extracted_text }}</textarea>
@@ -95,21 +95,21 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Nombre:</label>
-                                        <input type="text" name="nombre" class="form-control">
+                                        <input type="text" name="nombre" class="form-control" value="{{ nombre|default:'' }}">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Apellido:</label>
-                                        <input type="text" name="apellido" class="form-control">
+                                        <input type="text" name="apellido" class="form-control" value="{{ apellido|default:'' }}">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Email:</label>
-                                        <input type="email" name="email" class="form-control">
+                                        <input type="email" name="email" class="form-control" value="{{ email|default:'' }}">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Documento:</label>
-                                        <input type="text" name="documento" class="form-control">
+                                        <input type="text" name="documento" class="form-control" value="{{ documento|default:'' }}">
                                     </div>
                                 </div>
                                 <div class="row">
