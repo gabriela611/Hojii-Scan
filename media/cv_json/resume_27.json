@@ -1,0 +1,27 @@
+{
+    "id": 27,
+    "name": "ESTELLE DARCY",
+    "job_title": "UX DESIGNER",
+    "contact": "123 Anywhere St., Any City | hello@reallygreatsite.com | www.reallygreatsite.com",
+    "summary": "ESTELLE DARCY\r\nUX DESIGNER\r\n123 Anywhere St., Any City | hello@reallygreatsite.com | www.reallygreatsite.com\r\nUX Designer with a focus on delivering impactful results, eager to tackle dynamic challenges and apply\r\ncreativity to craft intuitive user experiences. I have demonstrated proficiency in project management, user-\r\ncentric problem-solving, and seamless collaboration across teams.",
+    "professional_experience": "Instant Chartz App, Morcelle Program Jan 2023 - Present\r\nLed development of an advanced automation system, achieving a 15% increase in operational\r\nefficiency.\r\nStreamlined manufacturing processes, reducing production costs by 10%.\r\nImplemented preventive maintenance strategies, resulting in a 20% decrease in equipment\r\ndowntime.\r\nSystem UX Engineer, XarrowAI Industries Feb 2021 - Dec 2022\r\nDesigned and optimised a robotic control system, realizing a 12% performance improvement.\r\nCoordinated testing and validation, ensuring compliance with industry standards.\r\nProvided technical expertise, contributing to a 15% reduction in system failures.",
+    "achievements": "Market Expansion. Identified untapped markets and launched a system to harness the line market,\r\nresulting in a revenue increase of $1.2 Million for Morcelle in 6 months.\r\nRevenue Growth. Successful Implementation of a new pricing strategy at XarrowAI increasing deal size\r\nby 15% and market cap by $500,000.",
+    "expertise": "Prototyping Tools Interaction Design Accessibility\r\nUser Research Visual Design Responsive Design",
+    "additional_info": "Languages: English, French, Mandarin.\r\nCertifications: Professional Design Engineer (PDE) License, Project Management Tech (PMT).\r\nAwards/Activities: Most Innovative Employer of the Year (2021), Overall Best Employee Division\r\nTwo (2024), Onboarding Project Lead (2023)",
+    "education": [
+        {
+            "degree": "University of Engineering UX Cohort",
+            "institution": "Major in Automotive Technology.",
+            "start_date": "Aug 2016",
+            "end_date": "Oct 2019",
+            "details": "Thesis on \"Technological Advancements within the current Mechatronics Industry”."
+        },
+        {
+            "degree": "Engineering University",
+            "institution": "Relevant coursework in Structural Design and Project Management.",
+            "start_date": "May 2014",
+            "end_date": "May 2016",
+            "details": ""
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "id": 31,
+    "name": "Currículum Vitae Profesional en Tecnología",
+    "job_title": "JUAN JOSÉ RODRÍGUEZ",
+    "contact": "123 Calle Cualquier, Ciudad Ejemplo | juanjose.rodriguez@ejemplo.com | www.ejemplo.com",
+    "summary": "Currículum Vitae Profesional en Tecnología\r\nJUAN JOSÉ RODRÍGUEZ\r\nIngeniero de Sistemas\r\n123 Calle Cualquier, Ciudad Ejemplo | juanjose.rodriguez@ejemplo.com | www.ejemplo.com",
+    "professional_experience": "Ingeniero de Sistemas con enfoque en brindar resultados de alto impacto,\r\ndeseoso de afrontar desafíos dinámicos y aplicar creatividad para desarrollar\r\nsoluciones tecnológicas intuitivas. He demostrado competencia en gestión\r\nde proyectos, resolución de problemas centrada en el usuario y colaboración\r\nfluida entre equipos.\r\nAplicación Instant Chartz, Programa Morcelle\r\nEnero 2023 – Actualidad\r\nLidero el desarrollo de un sistema de automatización avanzada, logrando un\r\naumento del 15 % en eficiencia operativa.\r\nOptimicé procesos de manufactura, reduciendo costos de producción en un 10 %.\r\nImplementé estrategias de mantenimiento preventivo, consiguiendo una disminución\r\ndel 20 % en tiempo de inactividad del equipo.\r\nIngeniero de Sistemas, XarrowAI Industries\r\nFebrero 2021 – Diciembre 2022\r\nDiseñé y optimicé un sistema de control robótico, logrando una mejora del 12 % en el rendimiento.\r\nCoordiné pruebas y validación, garantizando el cumplimiento de normas industriales.\r\nBrindé experiencia técnica, contribuyendo a una reducción del 15 % en fallas del sistema.",
+    "achievements": "Expansión de Mercado: Identifiqué mercados no explotados y lancé un sistema que generó\r\nun aumento de ingresos de $1.2 millones en 6 meses.\r\nCrecimiento de Ingresos: Implementé una nueva estrategia de precios en XarrowAI\r\nque incrementó el tamaño de los acuerdos en un 15 % y la capitalización de mercado\r\nen $500 000.",
+    "expertise": "(cid:127) Prototipado de Sistemas\r\n(cid:127) Investigación de Usuarios\r\n(cid:127) Diseño de Interacción\r\n(cid:127) Diseño Visual\r\n(cid:127) Accesibilidad\r\n(cid:127) Diseño Responsivo",
+    "additional_info": "Idiomas: Inglés, Francés, Mandarín\r\nCertificaciones: Licencia de Ingeniero de Diseño Profesional (PDE), Certificación en Gestión de Proyectos (PMT)\r\nPremios/Actividades:\r\n(cid:127) Empleador Más Innovador del Año (2021)\r\n(cid:127) Mejor Empleado de División (2024)\r\n(cid:127) Líder de Proyecto Onboarding (2023)",
+    "education": [
+        {
+            "degree": "Fundamentos Industriales de UX y Aplicación General",
+            "institution": "Universidad de Ingeniería UX Cohort",
+            "start_date": "",
+            "end_date": "",
+            "details": "Tesis: “Avances Tecnológicos en la Industria de la Mecatrónica Actual” Agosto 2016 – Octubre 2019 Licenciatura en Diseño de Ingeniería de Procesos Universidad de Ingeniería Cursos relevantes: Diseño Estructural y Gestión de Proyectos Mayo 2014 – Mayo 2016"
+        }
+    ]
+}
