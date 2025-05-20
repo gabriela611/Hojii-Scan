@@ -15,7 +15,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-LLM_WHISPERER_API_KEY = os.environ.get("LLM_WHISPERER_API_KEY")
+
 # Ruta al PDF base dentro de la carpeta static/extraction
 template_path = BASE_DIR / 'extraction' / 'static' / 'extraction' / 'Documento base de hoja de vida.pdf'
 
