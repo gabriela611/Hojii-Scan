@@ -1,6 +1,13 @@
-Django
-pytesseract
-pdfplumber
 django-widget-tweaks
+Django
+pillow
+pdfminer.six
+PyMuPDF
+pytesseract
+django-crispy-forms
 reportlab
+PyPDF2
+requests
+pdfplumber
 xhtml2pdf
+python-dotenv
