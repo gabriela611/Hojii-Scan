@@ -12,3 +12,4 @@ pdfplumber
 xhtml2pdf
 python-dotenv
 django-heroku
+gunicorn
