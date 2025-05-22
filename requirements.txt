@@ -11,3 +11,4 @@ requests
 pdfplumber
 xhtml2pdf
 python-dotenv
+django-heroku
