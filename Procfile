@@ -1,1 +1,1 @@
-web: gunicorn hojiiScan.wsgi:application
+web: gunicorn HojiiScan.wsgi:application
